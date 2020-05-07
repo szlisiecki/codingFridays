@@ -28,18 +28,8 @@ public class ContactRestController {
 	@Autowired
 	private ModelMapper modelMapper;
 	
-	/**
-	 * 
-	   {
-         "name": "Szymon",
-         "lastName": "Lisiecki",
-         "phone": "999 999 999"
-       }
-	 * @param contact
-	 */
 	@PostMapping("/contacts")
 	public ResponseEntity<Contact> saveContact(@RequestBody ContactDto contactDto) {
-		
 		
 		Contact savedContact = contactRepositoryDao.saveAndFlush(convertToEntity(contactDto));
 		return ResponseEntity.status(HttpStatus.CREATED).body(savedContact);
@@ -50,7 +40,7 @@ public class ContactRestController {
 
 		Optional<Contact> contact = contactRepositoryDao.findById(id);
 		if(contact.isPresent()) {
-			// jest kontakt
+			// jest kontakts
 			return ResponseEntity.status(HttpStatus.OK).body(convertToDto(contact.get()));			
 		} else {
 			// nie ma kontaktu
@@ -66,34 +56,10 @@ public class ContactRestController {
 			@RequestParam(value = "sortBy", required = false, defaultValue = "id") String sortBy
 			) {
 		
-		if (size > 100) {
-			size = 100;
-		}
-		//contactRepositoryDao.findAll(PageRequest.of(4, 10));
-		
 		Direction direction = "asc".equalsIgnoreCase(sort) ? Direction.ASC : Direction.DESC;
-
-		
-//		Direction direction = null;
-//		if (sort.equals("asc")) {
-//			direction = Direction.ASC; 
-//		} else {
-//			direction = Direction.DESC;
-//		}
-		
 		Page<Contact> contactPage = contactRepositoryDao.findAll(PageRequest.of(page, size, direction, sortBy.split(",")));
-		
 		List<ContactDto> allContactDto = contactPage.stream().map(contact -> convertToDto(contact)).collect(Collectors.toList());
-		
 		return ResponseEntity.status(HttpStatus.OK).body(allContactDto);
-
-		//		ArrayList<ContactDto> contactDtoList = new ArrayList<ContactDto>();
-//		for(Contact contact : allContacts) {
-//			ContactDto contactDto = convertToDto(contact);
-//			contactDtoList.add(contactDto);
-//		}
-		
-		
 	}
 	
 	private ContactDto convertToDto(Contact contact) {
@@ -103,13 +69,4 @@ public class ContactRestController {
 	private Contact convertToEntity(ContactDto contactDto) {
 		return modelMapper.map(contactDto, Contact.class);
 	}
-	
-//	private ContactDto convertToDto(Contact contact) {
-//		ContactDto contactDto = new ContactDto();
-//		contactDto.setId(contact.getId());
-//		contactDto.setName(contact.getName());
-//		contactDto.setLastName(contact.getLastName());
-//		contactDto.setPhone(contact.getPhone());
-//		return contactDto;
-//	}
 }
