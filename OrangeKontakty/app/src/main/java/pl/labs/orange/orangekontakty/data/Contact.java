@@ -1,13 +1,21 @@
 package pl.labs.orange.orangekontakty.data;
 
+import androidx.annotation.NonNull;
+
+import com.google.gson.annotations.SerializedName;
+
 public class Contact {
 
+    @SerializedName("id")
     private Long id;
 
+    @SerializedName("name")
     private String name;
 
+    @SerializedName("lastName")
     private String lastName;
 
+    @SerializedName("phone")
     private String phone;
 
     public String getName() {
@@ -40,5 +48,11 @@ public class Contact {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return name + " "  + lastName + " " + phone;
     }
 }
