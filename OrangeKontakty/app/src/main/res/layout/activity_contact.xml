@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:padding="16dp"
     android:orientation="vertical"
-    tools:context=".ContactActivity">
+    tools:context=".ui.ContactActivity">
 
     <TextView
         android:id="@+id/tvFillData"

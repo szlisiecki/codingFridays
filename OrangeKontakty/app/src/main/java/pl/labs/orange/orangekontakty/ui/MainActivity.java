@@ -1,4 +1,4 @@
-package pl.labs.orange.orangekontakty;
+package pl.labs.orange.orangekontakty.ui;
 
 import android.os.Bundle;
 
@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import pl.labs.orange.orangekontakty.R;
 
 public class MainActivity extends AppCompatActivity {
 
