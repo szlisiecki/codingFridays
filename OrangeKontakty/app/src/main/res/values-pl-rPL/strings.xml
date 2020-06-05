@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_name_count">Nazwa powinna miec wiecej liter niz trzy</string>
+    <string name="btn_add_label">Zapisz</string>
+    <string name="user_name_hint">Imię</string>
+    <string name="fill_data_label">Uzupełnij dane</string>
+    <string name="hint_surname">Nazwisko</string>
+    <string name="hint_phone_number">Numer telefonu</string>
+</resources>
