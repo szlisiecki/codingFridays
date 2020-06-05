@@ -9,4 +9,10 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="error_name_count">Name cannot be shorter than three chars</string>
+    <string name="btn_add_label">Save</string>
+    <string name="user_name_hint">Name</string>
+    <string name="fill_data_label">Fill data</string>
+    <string name="hint_surname">Surname</string>
+    <string name="hint_phone_number">Phone number</string>
 </resources>
