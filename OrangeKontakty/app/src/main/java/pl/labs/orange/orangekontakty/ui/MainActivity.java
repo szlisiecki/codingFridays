@@ -1,38 +1,94 @@
 package pl.labs.orange.orangekontakty.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import pl.labs.orange.orangekontakty.R;
+import pl.labs.orange.orangekontakty.common.RetrofitInstance;
+import pl.labs.orange.orangekontakty.data.Contact;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
+
+    private Call<List<Contact>> contactsCall = null;
+    private ContactsRecyclerViewAdapter contactsRecyclerViewAdapter = new ContactsRecyclerViewAdapter(new ArrayList<>(), new ContactsRecyclerViewAdapter.OnItemClick() {
+        @Override
+        public void OnItemClick(Contact contact) {
+            Intent intent = new Intent(MainActivity.this, ContactActivity.class);
+            intent.putExtra("CONTACT_KEY", contact);
+            startActivity(intent);
+        }
+    });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.e("onCreate","test");
+        Log.e("onCreate", "test");
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fabAddContact);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(MainActivity.this, ContactActivity.class);
+                startActivity(intent);
             }
         });
+        getContacts();
+        RecyclerView recyclerView = findViewById(R.id.rvContacts);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(contactsRecyclerViewAdapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getContacts();
+    }
+
+    private void getContacts() {
+        contactsCall = RetrofitInstance.getContactApi().getContacts(100);
+        contactsCall.enqueue(new Callback<List<Contact>>() {
+            @Override
+            public void onResponse(Call<List<Contact>> call, Response<List<Contact>> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        contactsRecyclerViewAdapter.updateContacts(response.body());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Contact>> call, Throwable t) {
+                Log.e("onFailure", "", t);
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (contactsCall != null) {
+            contactsCall.cancel();
+        }
     }
 
     @Override
