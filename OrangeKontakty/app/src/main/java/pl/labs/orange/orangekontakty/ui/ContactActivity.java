@@ -91,7 +91,6 @@ public class ContactActivity extends AppCompatActivity {
             }
         });
     }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();

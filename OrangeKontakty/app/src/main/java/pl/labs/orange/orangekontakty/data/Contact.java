@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 public class Contact implements Serializable {
-
+  
     @SerializedName("id")
     private Long id;
 
