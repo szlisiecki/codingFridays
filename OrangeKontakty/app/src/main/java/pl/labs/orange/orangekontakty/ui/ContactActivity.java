@@ -19,17 +19,19 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ContactActivity extends AppCompatActivity {
+    private Call<Contact> contactCall = null;
+    private Boolean isEdit = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact);
         final Button btnSave = findViewById(R.id.btn_add);
-        final TextView tvUserName = findViewById(R.id.tvFillData);
+
         final EditText edUserName = findViewById(R.id.etUserName);
         final EditText edUserSurName = findViewById(R.id.etUserSurName);
         final EditText edPhoneNumber = findViewById(R.id.etPhoneNumber);
-        edUserName.getText();
+        Contact contact = (Contact) getIntent().getSerializableExtra("CONTACT_KEY");
         edUserName.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -52,6 +54,13 @@ public class ContactActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
             }
         });
+        if(contact != null) {
+            edUserName.setText(contact.getName());
+            edUserSurName.setText(contact.getLastName());
+            edPhoneNumber.setText(contact.getPhone());
+            btnSave.setText("Edit");
+            isEdit = true;
+        }
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,11 +74,12 @@ public class ContactActivity extends AppCompatActivity {
     }
 
     private void saveContact(Contact contact){
-        RetrofitInstance.getContactApi().putContact(contact).enqueue(new Callback<Contact>() {
+        contactCall = RetrofitInstance.getContactApi().putContact(contact);
+        contactCall.enqueue(new Callback<Contact>() {
             @Override
             public void onResponse(Call<Contact> call, Response<Contact> response) {
                 if(response.isSuccessful()) {
-                    Log.e("isSuccessful", response.body().toString());
+                    finish();
                 }else{
                     Log.e("isHttpError", response.code() + "");
                 }
@@ -80,5 +90,12 @@ public class ContactActivity extends AppCompatActivity {
                 Log.e("onFailure","", throwable);
             }
         });
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(contactCall != null){
+            contactCall.cancel();
+        }
     }
 }
