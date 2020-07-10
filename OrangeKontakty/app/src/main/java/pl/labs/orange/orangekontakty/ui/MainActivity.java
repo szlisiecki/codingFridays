@@ -12,6 +12,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -43,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
         Log.e("onCreate", "test");
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        ((CollapsingToolbarLayout)findViewById(R.id.clToolbar)).setTitleEnabled(false);
+        getSupportActionBar().setTitle("test");
 
         FloatingActionButton fab = findViewById(R.id.fabAddContact);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -57,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(contactsRecyclerViewAdapter);
     }
-
     @Override
     protected void onResume() {
         super.onResume();

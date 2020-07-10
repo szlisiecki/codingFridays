@@ -56,7 +56,7 @@
             android:inputType="phone"
             android:hint="@string/hint_phone_number" />
     </com.google.android.material.textfield.TextInputLayout>
-    <Button
+    <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
