@@ -11,7 +11,7 @@ public class RetrofitInstance {
 
     private static Retrofit retrofit;
     private static ContactApi contactApi;
-    private static final String BASE_URL = "http://192.168.1.49:8080";
+    private static final String BASE_URL = "http://192.168.122.1:8080";
 
     private static Retrofit getRetrofitInstance() {
         if (retrofit == null) {
