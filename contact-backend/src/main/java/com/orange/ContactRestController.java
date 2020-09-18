@@ -1,9 +1,12 @@
 package com.orange;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +15,16 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 public class ContactRestController {
@@ -28,11 +35,18 @@ public class ContactRestController {
 	@Autowired
 	private ModelMapper modelMapper;
 	
+	@ApiOperation(hidden=true, value = "")
+	@GetMapping(value = "/")
+    public void redirect(HttpServletResponse response) throws IOException {
+        response.sendRedirect("/swagger-ui.html");
+    }
+
+	
 	@PostMapping("/contacts")
-	public ResponseEntity<Contact> saveContact(@RequestBody ContactDto contactDto) {
-		
+	public ResponseEntity<ContactDto> saveContact(@RequestBody ContactDto contactDto) {
+		contactDto.setId(null);
 		Contact savedContact = contactRepositoryDao.saveAndFlush(convertToEntity(contactDto));
-		return ResponseEntity.status(HttpStatus.CREATED).body(savedContact);
+		return ResponseEntity.status(HttpStatus.CREATED).body(convertToDto(savedContact));
 	}
 	
 	@GetMapping("/contacts/{id}")
@@ -60,6 +74,31 @@ public class ContactRestController {
 		Page<Contact> contactPage = contactRepositoryDao.findAll(PageRequest.of(page, size, direction, sortBy.split(",")));
 		List<ContactDto> allContactDto = contactPage.stream().map(contact -> convertToDto(contact)).collect(Collectors.toList());
 		return ResponseEntity.status(HttpStatus.OK).body(allContactDto);
+	}
+	
+	@PutMapping("/contacts/{id}")
+	public ResponseEntity<ContactDto> editContact(@PathVariable long id, @RequestBody ContactDto contactDto) {
+		Optional<Contact> contact = contactRepositoryDao.findById(id);
+		
+		if (contact.isPresent()) {
+			Contact contactEntity = convertToEntity(contactDto);
+			contactEntity.setId(id);
+			Contact editedContact = contactRepositoryDao.saveAndFlush(contactEntity);
+			return ResponseEntity.status(HttpStatus.CREATED).body(convertToDto(editedContact));
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+	}
+	
+	@DeleteMapping("/contacts/{id}")
+	public ResponseEntity<Void> deleteContact(@PathVariable long id) {
+		Optional<Contact> contact = contactRepositoryDao.findById(id);
+		if (contact.isPresent()) {
+			contactRepositoryDao.deleteById(id);
+			return ResponseEntity.noContent().build();			
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
 	}
 	
 	private ContactDto convertToDto(Contact contact) {
