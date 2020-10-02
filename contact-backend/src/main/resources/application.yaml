@@ -3,3 +3,9 @@ spring:
     url: jdbc:postgresql://localhost/contacts
     username: contactUser  
     password: contactUser
+    
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

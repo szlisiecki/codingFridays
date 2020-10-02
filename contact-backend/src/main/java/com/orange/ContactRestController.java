@@ -31,10 +31,10 @@ public class ContactRestController {
 	private ModelMapper modelMapper;
 	
 	@PostMapping("/contacts")
-	public ResponseEntity<Contact> saveContact(@RequestBody ContactDto contactDto) {
+	public ResponseEntity<ContactDto> saveContact(@RequestBody ContactDto contactDto) {
 		contactDto.setId(null);
 		Contact savedContact = contactRepositoryDao.saveAndFlush(convertToEntity(contactDto));
-		return ResponseEntity.status(HttpStatus.CREATED).body(savedContact);
+		return ResponseEntity.status(HttpStatus.CREATED).body(convertToDto(savedContact));
 	}
 	
 	@GetMapping("/contacts/{id}")
