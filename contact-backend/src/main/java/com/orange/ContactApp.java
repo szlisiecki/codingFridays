@@ -1,11 +1,15 @@
 package com.orange;
 
+import java.util.Collections;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -28,6 +32,18 @@ public class ContactApp {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.orange"))
-                .build();
+                .build().apiInfo(createApiInfo());
+	}
+
+	private ApiInfo createApiInfo() {		
+		Contact contact = new Contact("312 Plaza", "https://plazza.orange.com/groups/312", "plaza312@orange.com");
+		return new ApiInfo("Contacts Documentation",
+									  "Rest application for storing contacts", 
+									  "1-SNAPSHOT", 
+									  null, 
+									  contact, 
+									  "MIT Licence", 
+									  "https://opensource.org/licenses/mit-license.php",
+									  Collections.emptyList()); 
 	}
 }
