@@ -13,5 +13,5 @@ management:
        
        
 jwt:
-  expirationTime: 3600000
+  expirationTime: 10800000
   secret: mySuperSecret 

@@ -1,6 +1,7 @@
 package com.orange;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -50,6 +51,7 @@ public class ContactRestController {
 		}
 	}
 	
+	
 	@GetMapping("/contacts")
 	public ResponseEntity<Collection<ContactDto>> getAll(
 			@RequestParam(value = "page", required = false, defaultValue = "0") int page, 
@@ -87,6 +89,30 @@ public class ContactRestController {
 		} else {
 			return ResponseEntity.notFound().build();
 		}
+	}
+	
+	@GetMapping("/users/{userId}/contacts")
+	public ResponseEntity<Collection<ContactDto>> getuserContact(
+			@PathVariable String userId,
+			@RequestParam(value = "page", required = false, defaultValue = "0") int page, 
+			@RequestParam(value = "size", required = false, defaultValue = "5") int size,
+			@RequestParam(value = "sort", required = false, defaultValue = "asc") String sort,
+			@RequestParam(value = "sortBy", required = false, defaultValue = "id") String sortBy
+			) {
+		
+		Direction direction = "asc".equalsIgnoreCase(sort) ? Direction.ASC : Direction.DESC;
+		
+		Page<Contact> contactPage = contactRepositoryDao.findAll(PageRequest.of(page, size, direction, sortBy.split(",")));
+		List<ContactDto> allContactDto = contactPage.stream().map(contact -> convertToDto(contact)).collect(Collectors.toList());
+		
+		if("Artur".equals(userId)) {
+			return ResponseEntity.status(HttpStatus.OK).body(allContactDto.stream().filter(c -> c.getId() % 2 == 0).collect(Collectors.toList()));
+		} else if ("Szymon".equals(userId)) {
+			return ResponseEntity.status(HttpStatus.OK).body(allContactDto);
+		} else {
+			return ResponseEntity.status(HttpStatus.OK).body(Collections.emptyList());
+		}
+		
 	}
 	
 	private ContactDto convertToDto(Contact contact) {

@@ -28,8 +28,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication().withUser("Szymon").password("{noop}Szymon").roles("MODIFIER","READER").and()
-									 .withUser("Artur").password("{noop}Artur").roles("READER");
+		auth.inMemoryAuthentication().withUser("Szymon").password("{noop}Szymon").roles("MODIFIER","READER", "USER").and()
+									 .withUser("Artur").password("{noop}Artur").roles("READER", "USER");
 	}
 	
 	@Override
@@ -39,6 +39,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
                 .authorizeRequests()
             	.antMatchers(HttpMethod.GET, "/contacts/**"). hasRole("READER")
 				.antMatchers("/contacts/**").hasRole("MODIFIER")
+				.antMatchers("/users/{userId}/contacts").access("@userSecurity.hasUserId(authentication,#userId,'USER')")
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
