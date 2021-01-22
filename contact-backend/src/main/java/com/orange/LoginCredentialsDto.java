@@ -1,6 +1,6 @@
 package com.orange;
 
-public class LoginCredentials {
+public class LoginCredentialsDto {
     private String username;
     private String password;
 

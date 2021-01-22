@@ -50,6 +50,7 @@ public class RestAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuc
                 .withArrayClaim("roles", array)
                 .withExpiresAt(new Date(System.currentTimeMillis() + expirationTime))              
                 .sign(Algorithm.HMAC256(secret));
+        
         response.getOutputStream().print("{\"token\": \"" + token + "\"}");
     }
 }

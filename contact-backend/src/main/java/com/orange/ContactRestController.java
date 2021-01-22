@@ -92,7 +92,7 @@ public class ContactRestController {
 	}
 	
 	@GetMapping("/users/{userId}/contacts")
-	public ResponseEntity<Collection<ContactDto>> getuserContact(
+	public ResponseEntity<Collection<ContactDto>> getUserContact(
 			@PathVariable String userId,
 			@RequestParam(value = "page", required = false, defaultValue = "0") int page, 
 			@RequestParam(value = "size", required = false, defaultValue = "5") int size,

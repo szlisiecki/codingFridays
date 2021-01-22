@@ -55,7 +55,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             DecodedJWT verifiedToken = JWT.require(Algorithm.HMAC256(secret))
                     .build()
                     .verify(token.replace(TOKEN_PREFIX, ""));
-                    
+            // sprawdz w bazie  
             if (verifiedToken.getSubject() != null) {
 //                UserDetails userDetails = userDetailsService.loadUserByUsername(userName);
 //                userDetails.getAuthorities()

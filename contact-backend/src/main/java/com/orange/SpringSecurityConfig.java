@@ -40,6 +40,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
             	.antMatchers(HttpMethod.GET, "/contacts/**"). hasRole("READER")
 				.antMatchers("/contacts/**").hasRole("MODIFIER")
 				.antMatchers("/users/{userId}/contacts").access("@userSecurity.hasUserId(authentication,#userId,'USER')")
+//				.antMatchers("/swagger-ui.html").permitAll()
+//				.antMatchers("/webjars/**").permitAll()
+//				.antMatchers("/swagger-resources/**").permitAll()
+				 .antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/security", "/swagger-ui.html", "/webjars/**","/swagger-resources/configuration/ui","/swagger-ui.html").permitAll()
+//				/csrf
+//				/v2/api-docs
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
