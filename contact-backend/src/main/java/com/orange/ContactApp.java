@@ -28,6 +28,7 @@ public class ContactApp {
 	//TODO black/white list
 	//TODO użytkownicy w bazie danych
 	//TODO refactor
+	//TODO liquibase
 	
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(ContactApp.class, args);
