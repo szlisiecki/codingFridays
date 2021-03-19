@@ -1,0 +1,95 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet author="saymoon (generated)" id="1616159693067-1">
+        <insert tableName="contact">
+            <column name="id" valueNumeric="13"/>
+            <column name="name" value="Szymon cztery"/>
+            <column name="last_name" value="Lisiecki"/>
+            <column name="phone" value="666666666"/>
+        </insert>
+        <insert tableName="contact">
+            <column name="id" valueNumeric="16"/>
+            <column name="name" value="Szymon trzy"/>
+            <column name="last_name" value="Lisiecki"/>
+            <column name="phone" value="111111111"/>
+        </insert>
+        <insert tableName="contact">
+            <column name="id" valueNumeric="17"/>
+            <column name="name" value="Szymon trzy"/>
+            <column name="last_name" value="Lisiecki"/>
+            <column name="phone" value="2222222222"/>
+        </insert>
+        <insert tableName="contact">
+            <column name="id" valueNumeric="18"/>
+            <column name="name" value="Szymon trzy"/>
+            <column name="last_name" value="Lisiecki"/>
+            <column name="phone" value="33333333"/>
+        </insert>
+        <insert tableName="contact">
+            <column name="id" valueNumeric="19"/>
+            <column name="name" value="Szymon"/>
+            <column name="last_name" value="Lisiecki"/>
+            <column name="phone" value="22222222222"/>
+        </insert>
+        <insert tableName="contact">
+            <column name="id" valueNumeric="20"/>
+            <column name="name" value="Szymon dwa"/>
+            <column name="last_name" value="Lisiecki"/>
+            <column name="phone" value="121212"/>
+        </insert>
+        <insert tableName="contact">
+            <column name="id" valueNumeric="21"/>
+            <column name="name" value="Szymon trzy"/>
+            <column name="last_name" value="Lisiecki"/>
+            <column name="phone" value="123"/>
+        </insert>
+        <insert tableName="contact">
+            <column name="id" valueNumeric="22"/>
+            <column name="name" value="Szymon trzy"/>
+            <column name="last_name" value="Lisiecki"/>
+            <column name="phone" value="444"/>
+        </insert>
+        <insert tableName="contact">
+            <column name="id" valueNumeric="12"/>
+            <column name="name" value="Szymon trzy"/>
+            <column name="last_name" value="Lisiecki"/>
+            <column name="phone" value="444"/>
+        </insert>
+        <insert tableName="contact">
+            <column name="id" valueNumeric="23"/>
+            <column name="name" value="bbbn"/>
+            <column name="last_name" value="bbb"/>
+            <column name="phone" value="444"/>
+        </insert>
+        <insert tableName="contact">
+            <column name="id" valueNumeric="24"/>
+            <column name="name" value="bbbn"/>
+            <column name="last_name" value="bbb"/>
+            <column name="phone" value="444"/>
+        </insert>
+        <insert tableName="contact">
+            <column name="id" valueNumeric="25"/>
+            <column name="name" value="bbbn"/>
+            <column name="last_name" value="bbb"/>
+            <column name="phone" value="444"/>
+        </insert>
+        <insert tableName="contact">
+            <column name="id" valueNumeric="26"/>
+            <column name="name" value="bbbn"/>
+            <column name="last_name" value="bbb"/>
+            <column name="phone" value="444"/>
+        </insert>
+        <insert tableName="contact">
+            <column name="id" valueNumeric="27"/>
+            <column name="name" value="bbbn"/>
+            <column name="last_name" value="bbb"/>
+            <column name="phone" value="444"/>
+        </insert>
+        <insert tableName="contact">
+            <column name="id" valueNumeric="28"/>
+            <column name="name" value="bbbn"/>
+            <column name="last_name" value="bbb"/>
+            <column name="phone" value="444"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

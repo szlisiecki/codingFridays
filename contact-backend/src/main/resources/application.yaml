@@ -4,6 +4,11 @@ spring:
     username: contactUser  
     password: contactUser
     
+    
+  liquibase:
+    change-log: classpath:liquibase/liquibase.xml
+    
+    
 management:
   endpoints:
     web:
